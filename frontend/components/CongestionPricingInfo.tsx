@@ -1,11 +1,31 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Info, X, ExternalLink } from 'lucide-react'
 
 export function CongestionPricingInfo() {
   const [isOpen, setIsOpen] = useState(false)
+
+  // Handle escape key to close modal
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false)
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape)
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = 'hidden'
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape)
+      document.body.style.overflow = 'unset'
+    }
+  }, [isOpen])
 
   return (
     <>
@@ -27,14 +47,15 @@ export function CongestionPricingInfo() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[9999] flex items-center justify-center p-4"
             onClick={() => setIsOpen(false)}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-gray-900 border border-gray-700 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+              transition={{ type: "spring", duration: 0.5 }}
+              className="bg-gray-900/95 backdrop-blur-md border border-gray-700 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative z-[10000]"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
@@ -43,13 +64,19 @@ export function CongestionPricingInfo() {
                   <div className="p-2 bg-blue-500 rounded-lg">
                     <Info className="h-5 w-5 text-white" />
                   </div>
-                  <h2 className="text-xl font-bold text-white">
-                    Congestion Pricing: Policy & Science
-                  </h2>
+                  <div>
+                    <h2 className="text-xl font-bold text-white">
+                      Congestion Pricing: Policy & Science
+                    </h2>
+                    <p className="text-xs text-gray-400 mt-1">
+                      Click outside or press Esc to close
+                    </p>
+                  </div>
                 </div>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-2 hover:bg-gray-800 rounded-lg text-gray-400 hover:text-white transition-colors"
+                  className="p-2 hover:bg-gray-800 rounded-lg text-gray-400 hover:text-white transition-all duration-200 hover:scale-110"
+                  title="Close (Esc)"
                 >
                   <X className="h-5 w-5" />
                 </button>

@@ -131,14 +131,14 @@ class DataService:
                     'longitudes': lons.tolist()
                 }
             }
-            # attach pollutant totals (convert to tons if likely kg)
+            # attach pollutant totals (they are already in tons from NetCDF)
             pollutant_totals: Dict[str, float] = {}
             if co2_total is not None:
-                pollutant_totals['co2'] = float(co2_total) / 1000.0
+                pollutant_totals['co2'] = float(co2_total)
             if nox_total is not None:
-                pollutant_totals['nox'] = float(nox_total) / 1000.0
+                pollutant_totals['nox'] = float(nox_total)
             if pm25_total is not None:
-                pollutant_totals['pm25'] = float(pm25_total) / 1000.0
+                pollutant_totals['pm25'] = float(pm25_total)
             if pollutant_totals:
                 result['pollutant_totals_tons'] = pollutant_totals
             return result
@@ -165,8 +165,9 @@ class DataService:
         emission_grid = emission_data['emission_grid']
         emission_array = np.array(emission_grid)
         total_emissions = float(np.nansum(emission_array))
-        # Convert grid total to tons (assume kg if magnitudes are large)
-        grid_total_tons = total_emissions / 1000.0
+        
+        # Emissions are already in tons (annual scale)
+        grid_total_tons = total_emissions
 
         # Prefer NetCDF-provided pollutant totals
         co2_tons = None

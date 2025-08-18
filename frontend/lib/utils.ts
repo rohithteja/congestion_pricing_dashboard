@@ -6,9 +6,28 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatNumber(num: number, decimals: number = 2): string {
+  // Handle million notation for large numbers
+  if (Math.abs(num) >= 1000000) {
+    const millions = num / 1000000
+    return `${new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: millions % 1 === 0 ? 0 : 1,
+      maximumFractionDigits: 1,
+    }).format(millions)}M`
+  }
+  
+  // Handle thousand notation for medium numbers
+  if (Math.abs(num) >= 1000) {
+    const thousands = num / 1000
+    return `${new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: thousands % 1 === 0 ? 0 : 1,
+      maximumFractionDigits: 1,
+    }).format(thousands)}K`
+  }
+  
+  // Handle regular numbers
   return new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
+    minimumFractionDigits: num % 1 === 0 ? 0 : Math.min(decimals, 2),
+    maximumFractionDigits: Math.min(decimals, 2),
   }).format(num)
 }
 

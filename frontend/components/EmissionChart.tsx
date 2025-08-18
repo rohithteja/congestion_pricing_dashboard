@@ -12,6 +12,7 @@ import {
 import { Bar } from 'react-chartjs-2'
 import { motion } from 'framer-motion'
 import { EmissionStats } from '@/types'
+import { formatNumber } from '@/lib/utils'
 
 ChartJS.register(
   CategoryScale,
@@ -98,7 +99,7 @@ export function EmissionChart({ baseline, projected }: EmissionChartProps) {
           label: function(context: any) {
             const value = context.parsed.y
             const label = context.label === 'Baseline' ? 'Current' : 'After Policy'
-            return `${label}: ${value.toFixed(2)} tons/yr`
+            return `${label}: ${formatNumber(value)} tons/yr`
           },
         },
       },
@@ -126,7 +127,7 @@ export function EmissionChart({ baseline, projected }: EmissionChartProps) {
             size: 10,
           },
           callback: function(value: any) {
-            return `${value.toFixed(0)}`
+            return formatNumber(value, 0)
           },
         },
       },
@@ -197,10 +198,10 @@ export function EmissionChart({ baseline, projected }: EmissionChartProps) {
             {/* Bottom stats */}
             <div className="flex justify-between items-center text-xs">
               <div className="text-gray-500">
-                Current: {pollutant.baseline.toFixed(1)} tons/yr
+                Current: {formatNumber(pollutant.baseline)} tons/yr
               </div>
               <div className="text-gray-300 font-semibold">
-                After: {pollutant.projected.toFixed(1)} tons/yr
+                After: {formatNumber(pollutant.projected)} tons/yr
               </div>
             </div>
           </motion.div>
