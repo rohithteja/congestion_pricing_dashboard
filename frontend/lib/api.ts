@@ -17,6 +17,18 @@ export const apiService = {
     return response.data
   },
 
+  async getCitiesWithPopulation(): Promise<Array<{
+    name: string
+    display_name: string
+    population: number
+    state: string
+    lat: number
+    lng: number
+  }>> {
+    const response = await api.get('/cities/population')
+    return response.data
+  },
+
   async getCityData(city: string): Promise<CityEmissionData> {
     const response = await api.get(`/city/${city}`)
     return response.data
