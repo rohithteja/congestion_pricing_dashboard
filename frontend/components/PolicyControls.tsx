@@ -22,31 +22,36 @@ export function PolicyControls({
 
   return (
     <motion.div
-      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4"
+      className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-100/50 p-5"
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <div className="flex items-center space-x-2 mb-4">
-        <Settings className="h-4 w-4 text-blue-500" />
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+      <div className="flex items-center space-x-3 mb-5">
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg blur-sm opacity-20"></div>
+          <div className="relative p-2 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg">
+            <Settings className="h-4 w-4 text-white" />
+          </div>
+        </div>
+        <h3 className="text-lg font-semibold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
           Policy Controls
         </h3>
       </div>
 
       <div className="space-y-4">
         {/* Compact Selected Wards Info */}
-        <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
+        <div className="bg-gray-50/50 backdrop-blur-sm rounded-xl p-3 border border-gray-100/30">
           <div className="flex items-center justify-between">
-            <div className="text-sm text-gray-600 dark:text-gray-400">
+            <div className="text-sm text-gray-600">
               Selected Wards
             </div>
-            <div className="text-xl font-bold text-gray-900 dark:text-white">
+            <div className="text-xl font-bold text-gray-900">
               {selectedRoads.length}
             </div>
           </div>
           {selectedRoads.length === 0 && (
-            <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            <div className="text-xs text-gray-500 mt-1">
               Click wards on the map to select
             </div>
           )}
@@ -54,12 +59,12 @@ export function PolicyControls({
 
         {/* Compact Pricing Intensity Slider */}
         <div>
-          <div className="flex items-center justify-between mb-2">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          <div className="flex items-center justify-between mb-3">
+            <label className="text-sm font-semibold text-gray-700">
               Pricing Intensity
             </label>
             <div className="flex items-center">
-              <span className="text-lg font-bold text-gray-900 dark:text-white">
+              <span className="text-lg font-bold text-gray-900">
                 {pricingIntensity}%
               </span>
             </div>
@@ -98,12 +103,12 @@ export function PolicyControls({
         <motion.button
           onClick={onApplyPolicy}
           disabled={!canApplyPolicy}
-          className={`w-full flex items-center justify-center space-x-2 py-2.5 px-4 rounded-lg font-medium transition-all ${
+          className={`w-full flex items-center justify-center space-x-2 py-3 px-4 rounded-xl font-semibold transition-all ${
             canApplyPolicy
-              ? 'bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white shadow-lg'
-              : 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed'
+              ? 'bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-white shadow-lg hover:shadow-xl'
+              : 'bg-gray-200 text-gray-500 cursor-not-allowed'
           }`}
-          whileHover={canApplyPolicy ? { scale: 1.02 } : {}}
+          whileHover={canApplyPolicy ? { scale: 1.02, y: -1 } : {}}
           whileTap={canApplyPolicy ? { scale: 0.98 } : {}}
         >
           {isApplying ? (
@@ -120,7 +125,7 @@ export function PolicyControls({
         </motion.button>
 
         {!canApplyPolicy && !isApplying && (
-          <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+          <p className="text-xs text-gray-500 text-center">
             Select wards to enable policy
           </p>
         )}

@@ -1,13 +1,25 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
-import { ThemeProvider } from '@/components/theme-provider'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
-  title: 'City Emissions Simulator',
-  description: 'Interactive dashboard for simulating emissions reduction through congestion pricing policies',
+  title: 'City Emissions Simulator | Congestion Pricing Dashboard',
+  description: 'Interactive dashboard for simulating emissions reduction through congestion pricing policies. Built by Rohith Teja.',
+  keywords: ['emissions', 'congestion pricing', 'urban planning', 'data visualization', 'rohith teja'],
+  authors: [{ name: 'Rohith Teja', url: 'https://www.rohithteja.dev/' }],
+  creator: 'Rohith Teja',
 }
 
 export default function RootLayout({
@@ -16,16 +28,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+      <body className={`${inter.className} antialiased bg-gray-50`}>
+        {children}
       </body>
     </html>
   )

@@ -27,33 +27,36 @@ function EmissionCard({ title, value, unit, baseline, reduction, icon, color, de
 
   return (
     <motion.div
-      className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-700"
+      className="bg-white/70 backdrop-blur-sm rounded-2xl p-4 shadow-sm border border-gray-100/50 hover:shadow-md transition-all duration-300"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
-      whileHover={{ scale: 1.02 }}
+      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+      whileHover={{ scale: 1.02, y: -2 }}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <div className={`p-2 rounded-lg ${color}`}>
-            {icon}
+          <div className={`relative p-2 rounded-xl ${color}`}>
+            <div className={`absolute inset-0 ${color} rounded-xl blur-sm opacity-20`}></div>
+            <div className="relative">
+              {icon}
+            </div>
           </div>
           <div>
-            <h3 className="text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide">
+            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
               {title}
             </h3>
-            <div className="text-lg font-bold text-gray-900 dark:text-white">
-              {formatNumber(value)} <span className="text-sm font-normal text-gray-500">{unit}</span>
+            <div className="text-lg font-bold text-gray-900">
+              {formatNumber(value)} <span className="text-sm font-medium text-gray-500">{unit}</span>
             </div>
           </div>
         </div>
         
         {hasReduction && (
           <div className="text-right">
-            <div className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium ${
+            <div className={`flex items-center space-x-1 px-2.5 py-1 rounded-full text-xs font-semibold ${
               reduction > 0 
-                ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
-                : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+                ? 'bg-emerald-100 text-emerald-700'
+                : 'bg-gray-100 text-gray-600'
             }`}>
               {reduction > 0 ? (
                 <TrendingDown className="h-3 w-3" />

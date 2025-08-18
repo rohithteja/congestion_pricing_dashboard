@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
 import { IndiaMap } from '@/components/IndiaMap'
 import { CityDetailView } from '@/components/CityDetailView'
 import { LoadingSpinner } from '@/components/LoadingSpinner'
@@ -104,37 +105,48 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30">
       <Header />
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-6 py-8">
         <AnimatePresence mode="wait">
           {view === 'map' ? (
             <motion.div
-              key="india-map"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-6"
+              key="map"
+              className="space-y-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
             >
-              {/* Map Header */}
-              <div className="text-center">
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                  India Emissions Dashboard
-                </h1>
-                <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                  Explore emission data across 100+ Indian cities. Click on any city to analyze congestion pricing policies and their environmental impact.
-                </p>
+              {/* Welcome Section */}
+              <div className="text-center space-y-4">
+                <motion.h1
+                  className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                >
+                  Explore Urban Emissions
+                </motion.h1>
+                <motion.p
+                  className="text-lg text-gray-600 max-w-3xl mx-auto"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                  Simulate the impact of congestion pricing policies on air quality across Indian cities. 
+                  Analyze emissions data and visualize environmental benefits through interactive modeling.
+                </motion.p>
               </div>
 
               {/* India Map */}
-              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+              <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-100/50 p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-semibold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
                     Cities Overview
                   </h2>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                  <div className="text-sm text-gray-600 bg-gray-50/50 px-3 py-1 rounded-full">
                     Circle size represents population • Click to explore
                   </div>
                 </div>
@@ -215,7 +227,7 @@ export default function Home() {
                   selectedCityName={selectedCity}
                 />
               ) : (
-                <div className="text-center text-gray-600 dark:text-gray-400">
+                <div className="text-center text-gray-600">
                   Loading city data...
                 </div>
               )}
@@ -223,6 +235,7 @@ export default function Home() {
           )}
         </AnimatePresence>
       </main>
+      <Footer />
     </div>
   )
 }
