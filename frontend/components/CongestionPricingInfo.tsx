@@ -1,11 +1,18 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Info, X, ExternalLink } from 'lucide-react'
 
 export function CongestionPricingInfo() {
   const [isOpen, setIsOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  // Ensure component is mounted on client side
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   // Handle escape key to close modal
   useEffect(() => {
@@ -27,37 +34,26 @@ export function CongestionPricingInfo() {
     }
   }, [isOpen])
 
-  return (
-    <>
-      {/* Info Button */}
-      <motion.button
-        onClick={() => setIsOpen(true)}
-        className="mb-4 w-full flex items-center justify-center space-x-2 py-2 px-3 bg-blue-900/20 hover:bg-blue-900/30 border border-blue-700/30 rounded-lg text-sm text-blue-300 transition-colors group"
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-      >
-        <Info className="h-4 w-4 group-hover:text-blue-200" />
-        <span className="group-hover:text-blue-200">What is Congestion Pricing?</span>
-      </motion.button>
-
-      {/* Modal */}
-      <AnimatePresence>
-        {isOpen && (
+  const modalContent = (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-[999999]"
+          style={{ zIndex: 999999 }}
+          onClick={() => setIsOpen(false)}
+        >
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[9999] flex items-center justify-center p-4"
-            onClick={() => setIsOpen(false)}
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            transition={{ type: "spring", duration: 0.5 }}
+            className="bg-gray-900/95 backdrop-blur-md border border-gray-700 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative z-[1000000]"
+            style={{ zIndex: 1000000 }}
+            onClick={(e) => e.stopPropagation()}
           >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: "spring", duration: 0.5 }}
-              className="bg-gray-900/95 backdrop-blur-md border border-gray-700 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative z-[10000]"
-              onClick={(e) => e.stopPropagation()}
-            >
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-700">
                 <div className="flex items-center space-x-3">
@@ -201,6 +197,23 @@ export function CongestionPricingInfo() {
           </motion.div>
         )}
       </AnimatePresence>
+    )
+
+  return (
+    <>
+      {/* Info Button */}
+      <motion.button
+        onClick={() => setIsOpen(true)}
+        className="mb-4 w-full flex items-center justify-center space-x-2 py-2 px-3 bg-blue-900/20 hover:bg-blue-900/30 border border-blue-700/30 rounded-lg text-sm text-blue-300 transition-colors group"
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+      >
+        <Info className="h-4 w-4 group-hover:text-blue-200" />
+        <span className="group-hover:text-blue-200">What is Congestion Pricing?</span>
+      </motion.button>
+
+      {/* Modal Portal */}
+      {mounted && createPortal(modalContent, document.body)}
     </>
   )
 }

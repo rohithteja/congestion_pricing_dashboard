@@ -32,6 +32,25 @@ export function formatNumber(num: number, decimals: number = 2): string {
 }
 
 export function formatCurrency(amount: number): string {
+  // Handle million notation for large amounts
+  if (Math.abs(amount) >= 1000000) {
+    const millions = amount / 1000000
+    return `$${new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: millions % 1 === 0 ? 0 : 1,
+      maximumFractionDigits: 1,
+    }).format(millions)}M`
+  }
+  
+  // Handle thousand notation for medium amounts
+  if (Math.abs(amount) >= 1000) {
+    const thousands = amount / 1000
+    return `$${new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: thousands % 1 === 0 ? 0 : 1,
+      maximumFractionDigits: 1,
+    }).format(thousands)}K`
+  }
+  
+  // Handle regular amounts with standard currency formatting
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
