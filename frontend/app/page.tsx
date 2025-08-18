@@ -140,14 +140,24 @@ export default function Home() {
                 </motion.p>
               </div>
 
+              {/* Call to Action */}
+              <div className="text-center">
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm px-6 py-3 rounded-full border border-blue-500/30 text-lg font-medium text-blue-300 hover:from-blue-600/30 hover:to-purple-600/30 hover:border-blue-400/50 transition-all duration-300">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+                  </svg>
+                  Click on a city below
+                </div>
+              </div>
+
               {/* India Map */}
               <div className="bg-gray-900/70 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-700/50 p-6">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-xl font-semibold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                     Cities Overview
                   </h2>
-                  <div className="text-sm text-gray-400 bg-gray-800/50 px-3 py-1 rounded-full border border-gray-700/30">
-                    Circle size represents population • Click to explore
+                  <div className="text-sm text-gray-400">
+                    Circle size represents population
                   </div>
                 </div>
                 {loading ? (
