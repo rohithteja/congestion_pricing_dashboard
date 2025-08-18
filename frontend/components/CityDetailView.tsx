@@ -151,7 +151,7 @@ export function CityDetailView({
         </motion.div>
       </div>
 
-      {/* Chart Section */}
+      {/* Compact Chart Section */}
       {policyResult && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -159,8 +159,8 @@ export function CityDetailView({
           transition={{ duration: 0.4, delay: 0.2 }}
           className="mt-6"
         >
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-            <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4">
+            <h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
               Emissions Comparison
             </h3>
             <EmissionChart

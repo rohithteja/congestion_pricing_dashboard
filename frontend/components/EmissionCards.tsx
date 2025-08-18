@@ -27,49 +27,48 @@ function EmissionCard({ title, value, unit, baseline, reduction, icon, color, de
 
   return (
     <motion.div
-      className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-100 dark:border-gray-700"
+      className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-700"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
       whileHover={{ scale: 1.02 }}
     >
-      <div className="flex items-center justify-between mb-4">
-        <div className={`p-2 rounded-lg ${color}`}>
-          {icon}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-3">
+          <div className={`p-2 rounded-lg ${color}`}>
+            {icon}
+          </div>
+          <div>
+            <h3 className="text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide">
+              {title}
+            </h3>
+            <div className="text-lg font-bold text-gray-900 dark:text-white">
+              {formatNumber(value)} <span className="text-sm font-normal text-gray-500">{unit}</span>
+            </div>
+          </div>
         </div>
+        
         {hasReduction && (
-          <div className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium ${
-            reduction > 0 
-              ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
-              : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
-          }`}>
-            {reduction > 0 ? (
-              <TrendingDown className="h-3 w-3" />
-            ) : (
-              <TrendingUp className="h-3 w-3" />
+          <div className="text-right">
+            <div className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium ${
+              reduction > 0 
+                ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
+                : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+            }`}>
+              {reduction > 0 ? (
+                <TrendingDown className="h-3 w-3" />
+              ) : (
+                <TrendingUp className="h-3 w-3" />
+              )}
+              <span>{formatPercentage(Math.abs(reduction))}</span>
+            </div>
+            {baseline && (
+              <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                <span className="line-through">{formatNumber(baseline)}</span>
+              </div>
             )}
-            <span>{formatPercentage(Math.abs(reduction))}</span>
           </div>
         )}
-      </div>
-
-      <div className="space-y-2">
-        <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide">
-          {title}
-        </h3>
-        <div className="space-y-1">
-          <div className="text-2xl font-bold text-gray-900 dark:text-white">
-            {formatNumber(value)} {unit}
-          </div>
-          {hasReduction && baseline && (
-            <div className="text-sm text-gray-500 dark:text-gray-400">
-              <span className="line-through">{formatNumber(baseline)}</span>
-              <span className="ml-2 text-green-600 dark:text-green-400">
-                -{formatNumber(baseline - value)}
-              </span>
-            </div>
-          )}
-        </div>
       </div>
     </motion.div>
   )
@@ -112,7 +111,7 @@ export function EmissionCards({ currentStats, baselineStats, policyResult }: Emi
         Emission Statistics
       </h3>
       
-      <div className="grid grid-cols-1 gap-4">
+      <div className="space-y-3">
         {cards.map((card, index) => (
           <EmissionCard
             key={card.title}
@@ -122,50 +121,27 @@ export function EmissionCards({ currentStats, baselineStats, policyResult }: Emi
         ))}
       </div>
 
-      {/* Cost Savings Card */}
+      {/* Compact Cost Savings */}
       {policyResult && (
         <motion.div
-          className="bg-gradient-to-r from-green-500 to-blue-500 rounded-xl p-6 text-white shadow-lg"
+          className="bg-gradient-to-r from-green-500 to-blue-500 rounded-lg p-4 text-white shadow-sm"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <div className="flex items-center space-x-3 mb-2">
-            <DollarSign className="h-6 w-6" />
-            <h3 className="text-lg font-semibold">Estimated Cost Savings</h3>
-          </div>
-          <div className="text-3xl font-bold">
-            {formatCurrency(policyResult.estimated_cost_savings)}
-          </div>
-          <div className="text-sm opacity-90 mt-1">
-            Annual savings from reduced emissions and health costs
-          </div>
-        </motion.div>
-      )}
-
-      {/* Policy Impact Summary */}
-      {policyResult && (
-        <motion.div
-          className="bg-gray-50 dark:bg-gray-700 rounded-xl p-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-        >
-          <h4 className="text-md font-semibold text-gray-900 dark:text-white mb-3">
-            Policy Impact Summary
-          </h4>
-          <div className="grid grid-cols-2 gap-4 text-sm">
-            <div>
-              <span className="text-gray-600 dark:text-gray-400">Affected Roads:</span>
-              <div className="font-medium text-gray-900 dark:text-white">
-                {policyResult.affected_roads.length} roads
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <DollarSign className="h-5 w-5" />
+              <div>
+                <h3 className="text-sm font-semibold">Cost Savings</h3>
+                <div className="text-lg font-bold">
+                  {formatCurrency(policyResult.estimated_cost_savings)}
+                </div>
               </div>
             </div>
-            <div>
-              <span className="text-gray-600 dark:text-gray-400">Pricing Intensity:</span>
-              <div className="font-medium text-gray-900 dark:text-white">
-                {policyResult.pricing_intensity}%
-              </div>
+            <div className="text-xs opacity-90 text-right">
+              <div>Annual savings</div>
+              <div>Health + Emissions</div>
             </div>
           </div>
         </motion.div>
