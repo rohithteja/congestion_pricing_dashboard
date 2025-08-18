@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Play, Settings } from 'lucide-react'
+import { CongestionPricingInfo } from './CongestionPricingInfo'
 
 interface PolicyControlsProps {
   pricingIntensity: number
@@ -27,6 +28,9 @@ export function PolicyControls({
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
+      {/* Congestion Pricing Information */}
+      <CongestionPricingInfo />
+
       <div className="flex items-center space-x-3 mb-5">
         <div className="relative">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg blur-sm opacity-20"></div>
