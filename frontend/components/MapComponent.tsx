@@ -20,7 +20,7 @@ if (typeof window !== 'undefined') {
 interface MapComponentProps {
   cityData: CityEmissionData
   selectedRoads: number[]
-  onRoadSelect: (roadIds: number[]) => void
+  onRoadSelect: (roadIds: number[] | ((prev: number[]) => number[])) => void
   showEmissions?: boolean
 }
 
@@ -103,6 +103,19 @@ export default function MapComponent({ cityData, selectedRoads, onRoadSelect, sh
     (cityData.bounds.east + cityData.bounds.west) / 2
   ]
   
+  // Calculate appropriate zoom level to fit city bounds
+  const latDiff = Math.abs(cityData.bounds.north - cityData.bounds.south)
+  const lonDiff = Math.abs(cityData.bounds.east - cityData.bounds.west)
+  const maxDiff = Math.max(latDiff, lonDiff)
+  
+  // Calculate zoom level based on city size
+  let initialZoom = 13
+  if (maxDiff > 0.5) initialZoom = 10      // Very large cities
+  else if (maxDiff > 0.2) initialZoom = 11 // Large cities
+  else if (maxDiff > 0.1) initialZoom = 12 // Medium cities
+  else if (maxDiff > 0.05) initialZoom = 13 // Small cities
+  else initialZoom = 14                     // Very small cities
+  
   const wardLayersRef = useRef<Map<number, L.Layer>>(new Map())
   const selectedRoadsRef = useRef<number[]>(selectedRoads)
 
@@ -142,7 +155,7 @@ export default function MapComponent({ cityData, selectedRoads, onRoadSelect, sh
         console.log(`Ward ${wardId} clicked. Was selected: ${wasSelected}, Current: ${currentSelection}, New selection:`, newSelection)
         
         // Immediately update styles for all wards with the new selection
-        wardLayersRef.current.forEach((wardLayer, id) => {
+        wardLayersRef.current.forEach((wardLayer: any, id) => {
           const isNowSelected = newSelection.includes(id)
           const newStyle = {
             color: isNowSelected ? '#dc2626' : '#1e40af',
@@ -179,7 +192,7 @@ export default function MapComponent({ cityData, selectedRoads, onRoadSelect, sh
   // Update ward styles when selection changes
   useEffect(() => {
     console.log('Updating ward styles for selection:', selectedRoads)
-    wardLayersRef.current.forEach((layer, wardId) => {
+    wardLayersRef.current.forEach((layer: any, wardId) => {
       const isSelected = selectedRoads.includes(wardId)
       const newStyle = {
         color: isSelected ? '#dc2626' : '#1e40af',
@@ -197,13 +210,14 @@ export default function MapComponent({ cityData, selectedRoads, onRoadSelect, sh
   return (
     <MapContainer
       center={center}
-      zoom={13}
+      zoom={initialZoom}
       style={{ height: '100%', width: '100%' }}
       className="rounded-lg"
     >
       <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='© OpenStreetMap contributors, © CARTO'
+        url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+        subdomains="abcd"
       />
       
       {/* Emission Heatmap */}

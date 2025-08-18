@@ -43,9 +43,10 @@ export default function LeafletMap({ citiesData, onCitySelect, selectedCity }: L
       doubleClickZoom: true
     })
 
-    // Add OpenStreetMap tile layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
+    // Add dark mode tile layer
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '© OpenStreetMap contributors, © CARTO',
+      subdomains: 'abcd'
     }).addTo(map)
 
     mapInstanceRef.current = map

@@ -58,10 +58,10 @@ export function CityDetailView({
       </motion.div>
 
       {/* Main Content */}
-      <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="flex-1 grid grid-cols-1 xl:grid-cols-2 gap-6">
         {/* Map Section */}
         <motion.div
-          className="lg:col-span-2"
+          className="xl:col-span-1"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4 }}
@@ -88,11 +88,34 @@ export function CityDetailView({
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
                 >
-                  {showEmissions ? '🔴 Hide Grid' : '⚪ Show Grid'}
+                  {showEmissions ? '🔴 Hide Emission Grid' : '⚪ Show Emission Grid'}
                 </button>
               </div>
             </div>
-            <div className="h-[500px]">
+            
+            {/* Instructions & Info */}
+            <div className="mb-4 space-y-2">
+              <div className="flex items-center space-x-4 text-sm">
+                <div className="flex items-center space-x-2 text-blue-600 dark:text-blue-400">
+                  <span className="text-lg">👆</span>
+                  <span>Click on ward boundaries to select them for congestion pricing</span>
+                </div>
+                <div className="flex items-center space-x-2 text-gray-500 dark:text-gray-400 text-xs">
+                  <span className="text-base">ℹ️</span>
+                  <span>Select multiple wards to apply pricing policies and analyze emission reductions</span>
+                </div>
+              </div>
+              
+              {selectedRoads.length > 0 && (
+                <div className="flex items-center space-x-2 text-green-600 dark:text-green-400 text-sm">
+                  <span className="text-base">✅</span>
+                  <span>{selectedRoads.length} ward{selectedRoads.length !== 1 ? 's' : ''} selected</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">• Click selected wards to deselect</span>
+                </div>
+              )}
+            </div>
+            
+            <div className="h-[600px]">
               <EmissionMap
                 cityData={cityData}
                 selectedRoads={selectedRoads}
@@ -105,7 +128,7 @@ export function CityDetailView({
 
         {/* Controls & Stats */}
         <motion.div
-          className="space-y-6"
+          className="xl:col-span-1 space-y-6"
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
