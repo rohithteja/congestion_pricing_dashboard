@@ -27,7 +27,7 @@ function EmissionCard({ title, value, unit, baseline, reduction, icon, color, de
 
   return (
     <motion.div
-      className="bg-white/70 backdrop-blur-sm rounded-2xl p-4 shadow-sm border border-gray-100/50 hover:shadow-md transition-all duration-300"
+      className="bg-gray-900/70 backdrop-blur-sm rounded-2xl p-4 shadow-2xl border border-gray-700/50 hover:shadow-2xl transition-all duration-300"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay, ease: "easeOut" }}
@@ -42,10 +42,10 @@ function EmissionCard({ title, value, unit, baseline, reduction, icon, color, de
             </div>
           </div>
           <div>
-            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
               {title}
             </h3>
-            <div className="text-lg font-bold text-gray-900">
+            <div className="text-lg font-bold text-gray-200">
               {formatNumber(value)} <span className="text-sm font-medium text-gray-500">{unit}</span>
             </div>
           </div>
@@ -53,10 +53,10 @@ function EmissionCard({ title, value, unit, baseline, reduction, icon, color, de
         
         {hasReduction && (
           <div className="text-right">
-            <div className={`flex items-center space-x-1 px-2.5 py-1 rounded-full text-xs font-semibold ${
+            <div className={`flex items-center space-x-1 px-2.5 py-1 rounded-full text-xs font-semibold border ${
               reduction > 0 
-                ? 'bg-emerald-100 text-emerald-700'
-                : 'bg-gray-100 text-gray-600'
+                ? 'bg-emerald-900/30 text-emerald-400 border-emerald-800/50'
+                : 'bg-gray-800/30 text-gray-400 border-gray-700/50'
             }`}>
               {reduction > 0 ? (
                 <TrendingDown className="h-3 w-3" />

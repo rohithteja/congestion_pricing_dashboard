@@ -139,7 +139,7 @@ export function EmissionChart({ baseline, projected }: EmissionChartProps) {
 
   return (
     <motion.div
-      className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-100/50 p-6"
+      className="bg-gray-900/70 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-700/50 p-6"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
@@ -154,7 +154,7 @@ export function EmissionChart({ baseline, projected }: EmissionChartProps) {
             </svg>
           </div>
         </div>
-        <h3 className="text-lg font-semibold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+        <h3 className="text-lg font-semibold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
           Emissions Comparison
         </h3>
       </div>
@@ -164,7 +164,7 @@ export function EmissionChart({ baseline, projected }: EmissionChartProps) {
         {pollutants.map((pollutant, index) => (
           <motion.div 
             key={pollutant.name} 
-            className="bg-gray-50/50 backdrop-blur-sm rounded-xl p-4 border border-gray-100/30 hover:shadow-md transition-all duration-300"
+            className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 border border-gray-700/30 hover:shadow-xl transition-all duration-300"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
@@ -172,15 +172,15 @@ export function EmissionChart({ baseline, projected }: EmissionChartProps) {
           >
             {/* Chart Title */}
             <div className="flex items-center justify-between mb-3">
-              <h4 className="text-sm font-semibold text-gray-800">
+              <h4 className="text-sm font-semibold text-gray-200">
                 {pollutant.name} Emissions
               </h4>
               <div className={`px-2.5 py-1 rounded-full text-xs font-medium ${
                 pollutant.reduction > 0 
-                  ? 'bg-emerald-100 text-emerald-700' 
+                  ? 'bg-emerald-900/30 text-emerald-400 border border-emerald-800/50' 
                   : pollutant.reduction < 0 
-                    ? 'bg-red-100 text-red-700' 
-                    : 'bg-gray-100 text-gray-700'
+                    ? 'bg-red-900/30 text-red-400 border border-red-800/50' 
+                    : 'bg-gray-800/30 text-gray-400 border border-gray-700/50'
               }`}>
                 {pollutant.reduction > 0 ? '-' : pollutant.reduction < 0 ? '+' : ''}{Math.abs(pollutant.reduction).toFixed(1)}%
               </div>
@@ -199,7 +199,7 @@ export function EmissionChart({ baseline, projected }: EmissionChartProps) {
               <div className="text-gray-500">
                 Current: {pollutant.baseline.toFixed(1)} tons/yr
               </div>
-              <div className="text-gray-800 font-semibold">
+              <div className="text-gray-300 font-semibold">
                 After: {pollutant.projected.toFixed(1)} tons/yr
               </div>
             </div>
@@ -208,15 +208,15 @@ export function EmissionChart({ baseline, projected }: EmissionChartProps) {
       </div>
 
       {/* Summary Section */}
-      <div className="mt-6 pt-6 border-t border-gray-100">
-        <h4 className="text-sm font-semibold text-gray-700 mb-3">
+      <div className="mt-6 pt-6 border-t border-gray-700/50">
+        <h4 className="text-sm font-semibold text-gray-300 mb-3">
           Overall Impact Summary
         </h4>
         <div className="grid grid-cols-3 gap-4">
           {pollutants.map((pollutant, index) => (
             <motion.div 
               key={`summary-${pollutant.name}`}
-              className="text-center p-3 bg-gray-50/50 rounded-xl border border-gray-100/30"
+              className="text-center p-3 bg-gray-800/50 rounded-xl border border-gray-700/30"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 + index * 0.1, ease: "easeOut" }}
@@ -226,10 +226,10 @@ export function EmissionChart({ baseline, projected }: EmissionChartProps) {
               </div>
               <div className={`text-lg font-bold ${
                 pollutant.reduction > 0 
-                  ? 'text-emerald-600' 
+                  ? 'text-emerald-400' 
                   : pollutant.reduction < 0 
-                    ? 'text-red-600'
-                    : 'text-gray-600'
+                    ? 'text-red-400'
+                    : 'text-gray-400'
               }`}>
                 {pollutant.reduction > 0 ? '-' : pollutant.reduction < 0 ? '+' : ''}{Math.abs(pollutant.reduction).toFixed(1)}%
               </div>

@@ -5,7 +5,7 @@ import { BarChart3, ExternalLink } from 'lucide-react'
 
 export function Header() {
   return (
-    <header className="bg-white/80 backdrop-blur-xl border-b border-gray-100 sticky top-0 z-50">
+    <header className="bg-black/90 backdrop-blur-xl border-b border-gray-800/50 sticky top-0 z-50">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <motion.div
@@ -21,10 +21,10 @@ export function Header() {
               </div>
             </div>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                 City Emissions Simulator
               </h1>
-              <p className="text-sm text-gray-500 font-medium">
+              <p className="text-sm text-gray-400 font-medium">
                 Interactive Congestion Pricing Dashboard
               </p>
             </div>
@@ -37,25 +37,25 @@ export function Header() {
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
           >
             <div className="text-right">
-              <p className="text-xs text-gray-400 uppercase tracking-wider font-medium">
+              <p className="text-xs text-gray-500 uppercase tracking-wider font-medium">
                 Created by
               </p>
               <a
                 href="https://www.rohithteja.dev/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center space-x-1 text-sm font-semibold text-gray-700 hover:text-blue-600 transition-colors group"
+                className="inline-flex items-center space-x-1 text-sm font-semibold text-gray-300 hover:text-blue-400 transition-colors group"
               >
                 <span>Rohith Teja</span>
                 <ExternalLink className="h-3 w-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
             </div>
             
-            <div className="h-8 w-px bg-gray-200"></div>
+            <div className="h-8 w-px bg-gray-700"></div>
             
             <div className="flex items-center space-x-2">
               <div className="h-2 w-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-xs text-gray-500 font-medium">Live Dashboard</span>
+              <span className="text-xs text-gray-400 font-medium">Live Dashboard</span>
             </div>
           </motion.div>
         </div>

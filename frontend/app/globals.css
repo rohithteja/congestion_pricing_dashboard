@@ -14,8 +14,8 @@
   }
   
   body {
-    background-color: rgb(249 250 251);
-    color: rgb(17 24 39);
+    background-color: rgb(0 0 0);
+    color: rgb(229 231 235);
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
@@ -48,7 +48,7 @@
   }
   
   ::-webkit-scrollbar-track {
-    background: #f1f5f9;
+    background: #1f2937;
     border-radius: 3px;
   }
   
@@ -95,7 +95,7 @@ input[type="range"] {
   appearance: none;
   height: 6px;
   border-radius: 3px;
-  background: linear-gradient(to right, #667eea 0%, #764ba2 var(--value, 50%), #e2e8f0 var(--value, 50%), #e2e8f0 100%);
+  background: linear-gradient(to right, #667eea 0%, #764ba2 var(--value, 50%), #374151 var(--value, 50%), #374151 100%);
   outline: none;
 }
 
@@ -134,14 +134,14 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .leaflet-popup-content-wrapper {
-  background-color: white;
-  color: rgb(17 24 39);
+  background-color: rgb(31 41 55);
+  color: rgb(229 231 235);
   border-radius: 0.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
 }
 
 .leaflet-popup-tip {
-  background-color: white;
+  background-color: rgb(31 41 55);
 }
 
 /* Animation classes */

@@ -105,7 +105,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30">
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800">
       <Header />
       
       <main className="container mx-auto px-6 py-8">
@@ -122,7 +122,7 @@ export default function Home() {
               {/* Welcome Section */}
               <div className="text-center space-y-4">
                 <motion.h1
-                  className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent"
+                  className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white via-gray-200 to-gray-300 bg-clip-text text-transparent"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.1 }}
@@ -130,7 +130,7 @@ export default function Home() {
                   Explore Urban Emissions
                 </motion.h1>
                 <motion.p
-                  className="text-lg text-gray-600 max-w-3xl mx-auto"
+                  className="text-lg text-gray-300 max-w-3xl mx-auto"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
@@ -141,12 +141,12 @@ export default function Home() {
               </div>
 
               {/* India Map */}
-              <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-100/50 p-6">
+              <div className="bg-gray-900/70 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-700/50 p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-semibold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+                  <h2 className="text-xl font-semibold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                     Cities Overview
                   </h2>
-                  <div className="text-sm text-gray-600 bg-gray-50/50 px-3 py-1 rounded-full">
+                  <div className="text-sm text-gray-400 bg-gray-800/50 px-3 py-1 rounded-full border border-gray-700/30">
                     Circle size represents population • Click to explore
                   </div>
                 </div>
@@ -227,7 +227,7 @@ export default function Home() {
                   selectedCityName={selectedCity}
                 />
               ) : (
-                <div className="text-center text-gray-600">
+                <div className="text-center text-gray-400">
                   Loading city data...
                 </div>
               )}

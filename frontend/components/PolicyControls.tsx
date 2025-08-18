@@ -22,7 +22,7 @@ export function PolicyControls({
 
   return (
     <motion.div
-      className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-100/50 p-5"
+      className="bg-gray-900/70 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-700/50 p-5"
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
@@ -34,19 +34,19 @@ export function PolicyControls({
             <Settings className="h-4 w-4 text-white" />
           </div>
         </div>
-        <h3 className="text-lg font-semibold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+        <h3 className="text-lg font-semibold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
           Policy Controls
         </h3>
       </div>
 
       <div className="space-y-4">
         {/* Compact Selected Wards Info */}
-        <div className="bg-gray-50/50 backdrop-blur-sm rounded-xl p-3 border border-gray-100/30">
+        <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-3 border border-gray-700/30">
           <div className="flex items-center justify-between">
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-400">
               Selected Wards
             </div>
-            <div className="text-xl font-bold text-gray-900">
+            <div className="text-xl font-bold text-gray-200">
               {selectedRoads.length}
             </div>
           </div>
@@ -60,11 +60,11 @@ export function PolicyControls({
         {/* Compact Pricing Intensity Slider */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <label className="text-sm font-semibold text-gray-700">
+            <label className="text-sm font-semibold text-gray-300">
               Pricing Intensity
             </label>
             <div className="flex items-center">
-              <span className="text-lg font-bold text-gray-900">
+              <span className="text-lg font-bold text-gray-200">
                 {pricingIntensity}%
               </span>
             </div>
