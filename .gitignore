@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Python venv
+backend/venv/
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# Build outputs
+.next/
+out/
+dist/
+coverage/
+
+# Env files
+.env
+.env.*
+.env.local
+
+# Cache
+.cache/
+**/.cache/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
