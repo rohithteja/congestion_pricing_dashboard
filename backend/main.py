@@ -260,10 +260,6 @@ async def get_city_stats(city: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error getting city stats: {str(e)}")
 
-# Vercel serverless function handler
-from mangum import Mangum
-handler = Mangum(app)
-
 if __name__ == "__main__":
     uvicorn.run(
         "main:app",
