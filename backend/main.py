@@ -8,7 +8,7 @@ import json
 import pandas as pd
 
 from models import CityEmissionData, PolicyRequest, PolicyResponse, EmissionStats
-from services.data_service import DataService
+from services.simple_data_service import SimpleDataService
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -33,7 +33,7 @@ app.add_middleware(
 )
 
 # Initialize data service
-data_service = DataService()
+data_service = SimpleDataService()
 
 # City coordinates mapping (lat, lng)
 CITY_COORDINATES = {
@@ -171,7 +171,7 @@ async def get_cities():
 async def get_cities_with_population():
     """Get cities with their population data for the India map"""
     try:
-        # Load the static data CSV
+        # Load the static data CSV from data folder (not data_simple)
         csv_path = Path(__file__).parent.parent / "data" / "others" / "df_static.csv"
         df = pd.read_csv(csv_path)
         

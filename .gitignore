@@ -5,6 +5,9 @@ node_modules/
 # Python venv
 backend/venv/
 
+# Backup folder (contains old complex data files)
+backup/
+
 # macOS
 .DS_Store
 

@@ -4,10 +4,10 @@ from datetime import datetime
 
 class EmissionStats(BaseModel):
     """Emission statistics for a city"""
-    co2: float = Field(..., description="CO2 emissions in kg")
-    nox: float = Field(..., description="NOx emissions in kg")
-    pm25: float = Field(..., description="PM2.5 emissions in kg")
-    total: float = Field(..., description="Total emissions in kg")
+    co2: float = Field(..., description="CO2 emissions in tons")
+    nox: float = Field(..., description="NOx emissions in tons")
+    pm25: float = Field(..., description="PM2.5 emissions in tons")
+    total: float = Field(..., description="Total emissions in tons")
 
 class RoadFeature(BaseModel):
     """GeoJSON feature representing a road"""
