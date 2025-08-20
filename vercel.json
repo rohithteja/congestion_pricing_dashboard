@@ -7,7 +7,10 @@
     },
     {
       "src": "backend/main.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb"
+      }
     }
   ],
   "routes": [
@@ -22,10 +25,5 @@
   ],
   "env": {
     "PYTHONPATH": "backend"
-  },
-  "functions": {
-    "backend/main.py": {
-      "runtime": "python3.9"
-    }
   }
 }

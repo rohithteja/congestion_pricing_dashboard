@@ -171,8 +171,26 @@ async def get_cities():
 async def get_cities_with_population():
     """Get cities with their population data for the India map"""
     try:
-        # Load the static data CSV from data folder (not data_simple)
-        csv_path = Path(__file__).parent.parent / "data" / "others" / "df_static.csv"
+        # Load the static data CSV from data folder - robust path resolution
+        current_dir = Path(__file__).parent
+        csv_path = None
+        
+        # Try different possible locations for the CSV file
+        possible_paths = [
+            current_dir.parent / "data" / "others" / "df_static.csv",  # ../data/others/
+            current_dir / "data" / "others" / "df_static.csv",         # ./data/others/
+            Path("data/others/df_static.csv"),                        # relative to cwd
+            Path("/tmp/data/others/df_static.csv"),                   # vercel tmp
+        ]
+        
+        for path in possible_paths:
+            if path.exists():
+                csv_path = path
+                break
+        
+        if csv_path is None:
+            raise FileNotFoundError("df_static.csv not found in any expected location")
+            
         df = pd.read_csv(csv_path)
         
         # Create a list of cities with their data
@@ -241,6 +259,10 @@ async def get_city_stats(city: str):
         raise HTTPException(status_code=404, detail=f"Data not found for city '{city}'")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error getting city stats: {str(e)}")
+
+# Vercel serverless function handler
+from mangum import Mangum
+handler = Mangum(app)
 
 if __name__ == "__main__":
     uvicorn.run(

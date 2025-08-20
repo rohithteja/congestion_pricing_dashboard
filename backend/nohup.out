@@ -9,3 +9,11 @@ INFO:     Waiting for application shutdown.
 INFO:     Application shutdown complete.
 INFO:     Finished server process [9775]
 INFO:     Stopping reloader process [9688]
+INFO:     Will watch for changes in these directories: ['/Users/rmitta/Documents/GitHub/congestion_pricing_dashboard/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [42627] using WatchFiles
+INFO:     Started server process [42706]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:64941 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64946 - "GET /cities/population HTTP/1.1" 200 OK

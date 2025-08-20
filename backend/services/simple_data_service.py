@@ -1,14 +1,28 @@
 import json
 from pathlib import Path
 from typing import List, Dict, Any
+import os
 
 from models import CityEmissionData, PolicyResponse, EmissionStats, RoadFeature, EmissionPoint
 
 class SimpleDataService:
     """Simplified service for loading JSON-based city data"""
     
-    def __init__(self, data_dir: str = "../data"):
-        self.data_dir = Path(data_dir)
+    def __init__(self, data_dir: str = None):
+        if data_dir is None:
+            # Try to find data directory relative to this file
+            current_dir = Path(__file__).parent
+            # Look for data directory in parent directories
+            for parent in [current_dir.parent.parent, current_dir.parent, current_dir]:
+                data_path = parent / "data"
+                if data_path.exists():
+                    self.data_dir = data_path
+                    break
+            else:
+                # Fallback to environment variable or default
+                self.data_dir = Path(os.environ.get('DATA_DIR', '../data'))
+        else:
+            self.data_dir = Path(data_dir)
         
     def load_city_data(self, city: str) -> CityEmissionData:
         """Load complete city data from simplified JSON format"""
