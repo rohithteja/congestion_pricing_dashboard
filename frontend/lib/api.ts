@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { CityEmissionData, PolicyRequest, PolicyResponse, EmissionStats } from '@/types'
-import { StaticDataService } from './static-api'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
-const USE_STATIC_MODE = !API_BASE_URL || API_BASE_URL === ''
+// Production backend URL (update this after deploying to Render)
+const PRODUCTION_API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://congestion-pricing-backend.onrender.com'
+const API_BASE_URL = process.env.NODE_ENV === 'production' ? PRODUCTION_API_URL : 'http://localhost:8000'
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -15,11 +15,13 @@ const api = axios.create({
 
 export const apiService = {
   async getCities(): Promise<string[]> {
-    if (USE_STATIC_MODE) {
-      return StaticDataService.getCities()
+    try {
+      const response = await api.get('/cities')
+      return response.data
+    } catch (error) {
+      console.error('Error fetching cities:', error)
+      return []
     }
-    const response = await api.get('/cities')
-    return response.data
   },
 
   async getCitiesWithPopulation(): Promise<Array<{
@@ -30,35 +32,43 @@ export const apiService = {
     lat: number
     lng: number
   }>> {
-    if (USE_STATIC_MODE) {
-      return StaticDataService.getCitiesByPopulation()
+    try {
+      const response = await api.get('/cities/population')
+      return response.data
+    } catch (error) {
+      console.error('Error fetching cities with population:', error)
+      return []
     }
-    const response = await api.get('/cities/population')
-    return response.data
   },
 
   async getCityData(city: string): Promise<CityEmissionData> {
-    if (USE_STATIC_MODE) {
-      return StaticDataService.getCityData(city)
+    try {
+      const response = await api.get(`/city/${city}`)
+      return response.data
+    } catch (error) {
+      console.error(`Error fetching city data for ${city}:`, error)
+      throw error
     }
-    const response = await api.get(`/city/${city}`)
-    return response.data
   },
 
   async applyPolicy(request: PolicyRequest): Promise<PolicyResponse> {
-    if (USE_STATIC_MODE) {
-      return StaticDataService.applyPolicy(request.city, request)
+    try {
+      const response = await api.post('/apply_policy', request)
+      return response.data
+    } catch (error) {
+      console.error('Error applying policy:', error)
+      throw error
     }
-    const response = await api.post('/apply_policy', request)
-    return response.data
   },
 
   async getCityStats(city: string): Promise<EmissionStats> {
-    if (USE_STATIC_MODE) {
-      return StaticDataService.getCityStats(city)
+    try {
+      const response = await api.get(`/city/${city}/stats`)
+      return response.data
+    } catch (error) {
+      console.error(`Error fetching stats for ${city}:`, error)
+      throw error
     }
-    const response = await api.get(`/city/${city}/stats`)
-    return response.data
   },
 }
 

@@ -7,11 +7,7 @@ const nextConfig = {
     };
     return config;
   },
-  output: 'export',  // Enable static export for Render static sites
-  trailingSlash: true,
-  images: {
-    unoptimized: true  // Required for static export
-  },
+  output: 'standalone',  // Optimized for Vercel
 }
 
 module.exports = nextConfig
