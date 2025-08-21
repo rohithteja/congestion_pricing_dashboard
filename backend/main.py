@@ -261,12 +261,11 @@ async def get_city_stats(city: str):
         raise HTTPException(status_code=500, detail=f"Error getting city stats: {str(e)}")
 
 if __name__ == "__main__":
+    import os
+    port = int(os.getenv("PORT", 8000))
     uvicorn.run(
         "main:app",
         host="0.0.0.0",
-        port=8000,
-        reload=True
+        port=port,
+        reload=False  # Disable reload in production
     )
-
-# Export for Vercel
-handler = app
