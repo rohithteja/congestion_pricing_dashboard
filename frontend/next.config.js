@@ -7,7 +7,7 @@ const nextConfig = {
     };
     return config;
   },
-  output: 'standalone',  // Optimized for Vercel
+  output: 'standalone',  // Optimized for production
 }
 
 module.exports = nextConfig

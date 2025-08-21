@@ -21,18 +21,14 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:3000", 
+        "http://localhost:3000",
         "http://127.0.0.1:3000",
-        "https://*.vercel.app",
-        "https://congestion-pricing-dashboard.vercel.app",
-        "https://congestion-pricing-dashboard-*.vercel.app"
+        "https://localhost:3000",
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-)
-
-# Initialize data service
+)# Initialize data service
 data_service = SimpleDataService()
 
 # City coordinates mapping (lat, lng)
@@ -180,7 +176,7 @@ async def get_cities_with_population():
             current_dir.parent / "data" / "others" / "df_static.csv",  # ../data/others/
             current_dir / "data" / "others" / "df_static.csv",         # ./data/others/
             Path("data/others/df_static.csv"),                        # relative to cwd
-            Path("/tmp/data/others/df_static.csv"),                   # vercel tmp
+            Path("/tmp/data/others/df_static.csv"),                   # temporary storage
         ]
         
         for path in possible_paths:

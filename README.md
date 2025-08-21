@@ -1,15 +1,13 @@
-# 🚦 City Emissions Simulator
+# 🚦 Congestion Pricing Dashboard
 
-> **Interactive dashboard for simulating emissions reduction through congestion pricing policies**
+> **Interactive web application for simulating emissions reduction through congestion pricing policies**
 
-An advanced fullstack application that allows users to select cities, apply congestion pricing policies to specific roads, and visualize real-time emissions reduction. Built with FastAPI backend and Next.js frontend.
-
-![Dashboard Preview](https://via.placeholder.com/800x400/22c55e/ffffff?text=City+Emissions+Simulator)
+A full-stack application that allows users to select cities, apply congestion pricing policies to specific roads, and visualize real-time emissions reduction. Built with FastAPI backend and Next.js frontend.
 
 ## ✨ Features
 
-### 🎯 **"What if...?" Policy Simulation**
-- Select from 100 Indian cities with 500m emission data
+### 🎯 **Policy Simulation**
+- Select from 100 Indian cities with emission data
 - Interactive road selection for congestion pricing
 - Real-time emissions calculation and visualization
 - Dynamic pricing intensity control (0-100%)
@@ -20,38 +18,35 @@ An advanced fullstack application that allows users to select cities, apply cong
 - Click-to-select road functionality
 - Visual highlighting of selected roads
 
-### 📊 **Advanced Analytics**
+### 📊 **Analytics Dashboard**
 - Before/after emissions comparison charts
 - CO₂, NOx, PM2.5 breakdown with statistics
 - Cost-benefit analysis with savings projections
 - Percentage reduction indicators
 
-### 🎨 **Professional UI/UX**
-- Modern dark/light theme toggle
-- Smooth animations with Framer Motion
+### 🎨 **Modern UI/UX**
+- Dark/light theme toggle
 - Responsive design for all devices
-- Professional emissions dashboard aesthetics
+- Professional dashboard aesthetics
+- Smooth animations
 
 ## 🏗️ Architecture
 
 ```
 congestion_pricing_dashboard/
-├── backend/                 # FastAPI Backend
-│   ├── main.py             # Application entry point
-│   ├── models.py           # Pydantic data models
-│   ├── services/           # Business logic
-│   │   └── data_service.py # NetCDF & GeoJSON processing
-│   └── requirements.txt    # Python dependencies
-├── frontend/               # Next.js Frontend
-│   ├── app/               # Next.js App Router
-│   ├── components/        # React components
-│   ├── lib/              # API client & utilities
-│   ├── types/            # TypeScript definitions
-│   └── package.json      # Node.js dependencies
-└── data/                  # City Data
+├── backend/                    # FastAPI Backend
+│   ├── main.py                # Application entry point
+│   ├── models.py              # Pydantic data models
+│   └── services/              # Business logic
+│       └── simple_data_service.py
+├── frontend/                   # Next.js Frontend
+│   ├── app/                   # Next.js App Router
+│   ├── components/            # React components
+│   ├── lib/                   # API client & utilities
+│   └── types/                 # TypeScript definitions
+└── data/                      # City Data (JSON format)
     └── {city}/
-        ├── emission.nc    # NetCDF emission data (500m resolution)
-        └── map.geojson    # Road network GeoJSON
+        └── data.json          # Emission and map data
 ```
 
 ## 🚀 Quick Start
@@ -77,7 +72,7 @@ pip install -r requirements.txt
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-**Backend will be available at:**
+**Backend available at:**
 - API: http://localhost:8000
 - Interactive docs: http://localhost:8000/docs
 
@@ -90,26 +85,19 @@ cd frontend
 npm install
 
 # Create environment file
-echo "NEXT_PUBLIC_API_URL=http://localhost:8000" > .env.local
+cp ../env.example .env.local
 
 # Start development server
 npm run dev
 ```
 
-**Frontend will be available at:** http://localhost:3000
+**Frontend available at:** http://localhost:3000
 
-### 3. Data Structure
+### 3. Using Docker (Optional)
 
-Ensure your data follows this structure:
-```
-data/
-├── mumbai/
-│   ├── emission.nc    # NetCDF with emission data
-│   └── map.geojson    # Road network GeoJSON
-├── delhi/
-│   ├── emission.nc
-│   └── map.geojson
-└── ... (other cities)
+```bash
+# Build and run with Docker Compose
+docker-compose up --build
 ```
 
 ## 🎮 How to Use
@@ -125,9 +113,7 @@ data/
 
 ### Backend
 - **FastAPI** - Modern Python web framework
-- **xarray** - NetCDF data processing
-- **geopandas** - GeoJSON handling
-- **numpy/pandas** - Data analysis
+- **pandas** - Data processing
 - **uvicorn** - ASGI server
 
 ### Frontend
@@ -136,7 +122,6 @@ data/
 - **Tailwind CSS** - Utility-first styling
 - **Leaflet.js** - Interactive maps
 - **Chart.js** - Data visualization
-- **Framer Motion** - Smooth animations
 
 ## 📡 API Endpoints
 
@@ -145,10 +130,9 @@ Returns list of available cities.
 
 ### `GET /city/{city}`
 Returns complete city data including:
-- Emission grid data (500m resolution)
+- Emission grid data
 - Road network GeoJSON
 - Baseline emission statistics
-- Map bounds
 
 ### `POST /apply_policy`
 Applies congestion pricing policy:
@@ -167,108 +151,77 @@ Returns emission statistics for a specific city.
 
 ## 🔧 Configuration
 
-### Backend Configuration
-```python
-# backend/.env (optional)
-DATA_DIR=../data
-API_HOST=0.0.0.0
-API_PORT=8000
-```
+### Environment Variables
+Copy `env.example` to `.env.local` (frontend) or `.env` (backend):
 
-### Frontend Configuration
 ```bash
-# frontend/.env.local
+# Frontend
 NEXT_PUBLIC_API_URL=http://localhost:8000
+
+# Backend
+PORT=8000
 ```
 
-## 📈 Data Processing
+## � Data Format
 
-The application processes:
+The application uses simplified JSON data format:
+```json
+{
+  "emission_data": {
+    "lat": [...],
+    "lon": [...], 
+    "co2": [...],
+    "nox": [...],
+    "pm25": [...]
+  },
+  "roads": {
+    "type": "FeatureCollection",
+    "features": [...]
+  },
+  "bounds": [[lat_min, lon_min], [lat_max, lon_max]]
+}
+```
 
-### NetCDF Emission Data
-- 500m spatial resolution
-- CO₂, NOx, PM2.5 measurements
-- Temporal data support
-- Automatic variable detection
+## 🚀 Production Deployment
 
-### GeoJSON Road Networks
-- OpenStreetMap compatible
-- Road properties and metadata
-- Geometric road representations
-- Interactive selection support
-
-## 🎨 UI Components
-
-### Interactive Map
-- Emission heatmap visualization
-- Road network overlay
-- Click-to-select functionality
-- Real-time highlighting
-
-### Policy Controls
-- Pricing intensity slider (0-100%)
-- Selected roads counter
-- Apply policy button
-- Real-time feedback
-
-### Analytics Dashboard
-- Animated emission cards
-- Before/after comparison charts
-- Cost savings projections
-- Percentage reduction indicators
-
-## 🌙 Theming
-
-Supports both light and dark modes with:
-- Custom color palette
-- Smooth theme transitions
-- Persistent theme selection
-- Professional dashboard aesthetics
-
-## 🚀 Deployment
-
-### Backend Deployment
+### Option 1: Traditional Server
 ```bash
-# Production build
+# Backend
 pip install gunicorn
 gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
-```
 
-### Frontend Deployment
-```bash
-# Build for production
+# Frontend
 npm run build
 npm run start
-
-# Or deploy to Vercel/Netlify
 ```
+
+### Option 2: Docker
+```bash
+docker-compose up -d
+```
+
+### Option 3: Cloud Platforms
+- Frontend: Vercel, Netlify, or any static hosting
+- Backend: Railway, Render, AWS, GCP, or any container hosting
+- Set `NEXT_PUBLIC_API_URL` to your backend URL
+
+## � Supported Cities
+
+The application supports 100 Indian cities including:
+
+**Major Cities**: Mumbai, Delhi, Bengaluru, Hyderabad, Chennai, Kolkata, Pune, Ahmedabad, Jaipur, Lucknow, Kanpur, Nagpur, Indore, Bhopal, Visakhapatnam, Patna, Vadodara, Ghaziabad, Ludhiana, Agra, and 80+ more cities.
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
+2. Create feature branch (`git checkout -b feature/new-feature`)
+3. Commit changes (`git commit -m 'Add new feature'`)
+4. Push to branch (`git push origin feature/new-feature`)
 5. Open Pull Request
-
-## 📊 City Data
-
-The application supports 100 Indian cities:
-
-**Metro Cities**: Mumbai, Delhi, Bengaluru, Hyderabad, Chennai, Kolkata, Pune, Ahmedabad, Jaipur, Lucknow, Kanpur, Nagpur, Indore, Bhopal, Visakhapatnam, Patna, Vadodara, Ghaziabad, Ludhiana, Agra, Nashik, Faridabad, Meerut, Rajkot, Varanasi, Srinagar, Aurangabad, Dhanbad, Amritsar, Allahabad, Ranchi, Howrah, Coimbatore, Jabalpur, Gwalior, Vijayawada, Jodhpur, Madurai, Raipur, Kota, Gurgaon, Chandigarh, Solapur, Hubli-Dharwad, Bareilly, Moradabad, Mysore, Guwahati, Aligarh, Tiruchirappalli, Tiruppur, Salem, Thiruvananthapuram, Kochi, Dehradun, Jammu, Mangalore, Erode, Belgaum, Ambattur, Amravati, Udaipur, Jamshedpur, Ulhasnagar, Nellore, Ajmer, Sangli, Jalgaon, Akola, Latur, Dhule, Ichalkaranji
-
-**Additional Cities**: Patiala, Panaji, Kohima, Gangtok, Shimla, Aizawl, Shillong, Itanagar, Imphal, and more...
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- CHETNA-Road dataset for emission data
-- OpenStreetMap contributors for road network data
-- Leaflet.js community for mapping capabilities
-- Chart.js team for visualization components
+This project is licensed under the MIT License.
 
 ---
 

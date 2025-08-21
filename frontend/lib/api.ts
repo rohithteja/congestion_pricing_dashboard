@@ -1,9 +1,7 @@
 import axios from 'axios'
 import { CityEmissionData, PolicyRequest, PolicyResponse, EmissionStats } from '@/types'
 
-// Production backend URL (update this after deploying to Render)
-const PRODUCTION_API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://congestion-pricing-backend.onrender.com'
-const API_BASE_URL = process.env.NODE_ENV === 'production' ? PRODUCTION_API_URL : 'http://localhost:8000'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
 const api = axios.create({
   baseURL: API_BASE_URL,
