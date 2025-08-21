@@ -1,0 +1,11 @@
+services:
+  # Frontend-Only Static Site (Free - always on, no backend needed)
+  - type: static
+    name: congestion-pricing-static
+    buildCommand: "cd frontend && npm install && npm run build && npm run export"
+    staticPublishPath: frontend/out
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        value: ""  # No backend needed - data served as static files

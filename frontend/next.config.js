@@ -7,7 +7,11 @@ const nextConfig = {
     };
     return config;
   },
-  output: 'standalone',
+  output: 'export',  // Enable static export for Render static sites
+  trailingSlash: true,
+  images: {
+    unoptimized: true  // Required for static export
+  },
 }
 
 module.exports = nextConfig
